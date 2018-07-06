@@ -26,6 +26,7 @@
 <script>
 import slugify from 'slugify'
 import db from '@/firebase/init'
+import firebase from 'firebase'
 
 export default {
   name: 'Signup',
@@ -40,7 +41,7 @@ export default {
   },
   methods: {
     signup () {
-      if (this.alias) {
+      if (this.alias && this.email && this.password) {
         this.slug = slugify(this.alias, {
           replacement: '-',
           remove: /[$*_+~.()'"!\-:@]/g,
@@ -51,12 +52,16 @@ export default {
           if (doc.exists) {
             this.feedback = 'This alias already exist'
           } else {
-            this.feedback = 'This alias is free to use'
+            firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+              .catch(err => {
+                this.feedback = err.message
+              })
+              this.feedback = 'This alias is free to use'
           }
         })
         console.log(this.slug)
       } else {
-        this.feedback = 'You must enter alias'
+        this.feedback = 'You must enter all fields'
       }
     }
   }
