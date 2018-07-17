@@ -23,5 +23,12 @@ export default {
 <style>
   body {
     background-color: #ddd;
+    background-image: url("./assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  html {
+    height: 100vh;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="login container">
     <form @submit.prevent="login" class="card-panel">
-      <h2 class="center deep-purple-text">Login</h2>
+      <h2 class="center amber-text text-darken-4">Login</h2>
       <div class="field">
         <label for="email">Email</label>
         <input type="email" name="email" v-model="email">
@@ -11,8 +11,12 @@
         <input type="password" name="password" v-model="password">
       </div>
       <p v-if="feedback" class="red-text center">{{ feedback }}</p>
-      <div class="field">
-        <button class="btn deep-purple">Login</button>
+      <div class="field center">
+        <button class="btn amber darken-4">Login</button>
+      </div>
+      <div class="field center">
+        Made with <span style="color: #e25555;">&#9829;</span> by I Putu Deta Utama Putra
+        <p><a target="_newtab" href="https://web.facebook.com/putudeta11">Facebook</a> - <a arget="_newtab" href="https://github.com/detautama">Github</a> - <a arget="_newtab" href="https://www.linkedin.com/in/deta-u-8bb1a7107">LinkedIn</a></p>
       </div>
     </form>
   </div>

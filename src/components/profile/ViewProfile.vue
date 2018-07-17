@@ -2,10 +2,13 @@
   <div class="view-profile container">
     <div v-if="profile" class="card">
       <h2 class="amber-text text-darken-4 center">{{profile.alias}}'s Wall</h2>
-      <ul class="comments collection">
+      <ul class="comments collection" v-chat-scroll>
         <li v-for="(comment, index) in comments" :key="index">
           <div class="amber-text text-darken-4">
             {{ comment.from }}
+          </div>
+          <div>
+            <small>{{ comment.time}}</small>
           </div>
           <div class="grey-text text-darken-2">
             {{ comment.content }}
@@ -26,6 +29,7 @@
 <script>
 import db from '@/firebase/init'
 import firebase from 'firebase'
+import moment from 'moment'
 
 export default {
   name: 'ViewProfile',
@@ -63,7 +67,8 @@ export default {
         if (change.type == 'added') {
           this.comments.push({
             from: change.doc.data().from,
-            content: change.doc.data().content
+            content: change.doc.data().content,
+            time: moment(change.doc.data().time).format('lll')
           })
         }
       })
@@ -92,7 +97,8 @@ export default {
 <style>
   .view-profile .card {
     padding: 20px;
-    margin-top: 60px;
+    width: 50vw;
+    margin: 5% auto 0 auto;
   }
 
   .view-profile .comments {
@@ -108,6 +114,12 @@ export default {
   .view-profile li {
     padding: 10px;
     border-bottom: 1px solid #eee;
+  }
+
+  @media only screen and (max-width: 600px) {
+      .view-profile .card {
+        width: 100%;
+      }
   }
 </style>
 

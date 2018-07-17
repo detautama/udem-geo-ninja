@@ -20,7 +20,7 @@ export default {
     renderMap () {
       const map = new google.maps.Map(document.getElementById('map'),{
         center: { lat: this.lat, lng: this.lng },
-        zoom: 6,
+        zoom: 1,
         maxZoom: 15,
         minZoom: 3,
         streetViewControl: false
