@@ -1,12 +1,12 @@
 <template>
   <div class="navbar">
-    <nav class="deep-purple darken-1">
+    <nav class="amber darken-4">
       <div class="container">
         <router-link :to="{ name: 'GMap' }" class="brand-logo left">GeoNinjas!</router-link>
         <ul class="right">
           <li v-if="!user"><router-link :to="{ name: 'Signup'}">Signup</router-link></li>
           <li v-if="!user"><router-link :to="{ name: 'Login' }">Login</router-link></li>
-          <li v-if="user"><a>{{ user.email }}</a></li>
+          <li v-if="user"><a>{{ user.alias }}</a></li>
           <li v-if="user"><a @click="logout">Logout</a></li>
         </ul>
       </div>
@@ -17,6 +17,7 @@
 
 <script>
 import firebase from 'firebase'
+import db from '@/firebase/init'
 
 export default {
   name: 'Navbar',
@@ -33,13 +34,20 @@ export default {
     }
   },
   created () {
-    firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        this.user = user
-      } else {
-        this.user = null
-      }
-    })
+    db.collection('users').where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then((snapshot) => {
+        snapshot.forEach(doc => {
+          this.user = doc.data()
+          this.user.id = doc.id
+        })
+      })
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if(user) {
+    //     this.user = user
+    //   } else {
+    //     this.user = null
+    //   }
+    // })
   }
 }
 </script>
